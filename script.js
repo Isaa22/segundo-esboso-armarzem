@@ -79,3 +79,38 @@ function finalizarPedido() {
 }
 
 document.getElementById("checkout-button").addEventListener("click", finalizarPedido);
+
+// Função para gerar código PIX
+function gerarCodigoPix(chave, nome, cidade, valor) {
+    const payloadFormat = "000201";
+    const merchantAccount = `0014BR.GOV.BCB.PIX01${chave.length}${chave}`;
+    const merchantInfo = `520400005303986540${valor.toFixed(2).length}${valor.toFixed(2).replace('.', '')}5802BR59${nome.length}${nome}60${cidade.length}${cidade}`;
+    const crc = "6304"; // Apenas marcador, não faz o cálculo CRC aqui
+
+    // Isso é um exemplo simplificado. Para produção, use uma biblioteca para montar EMV-Payload corretamente.
+    const payload = `${payloadFormat}${merchantAccount}${merchantInfo}${crc}`;
+
+    return payload;
+}
+
+// Função para gerar e exibir o QR Code do PIX
+function gerarQRCodePIX() {
+    const chave = "14958480943";  // Substitua pela sua chave Pix
+    const nome = "Armazém da Sra. Lourdes";
+    const cidade = "Rio Branco do Ivai";
+
+    // Obter o total do carrinho
+    const total = parseFloat(document.getElementById("total").innerText);
+
+    const codigoPix = gerarCodigoPix(chave, nome, cidade, total);
+
+    // Gerar o QR Code visual
+    document.getElementById("qrcode").innerHTML = "";
+    QRCode.toCanvas(document.getElementById("qrcode"), codigoPix, function (error) {
+        if (error) console.error(error);
+        console.log("QR Code gerado!");
+    });
+}
+
+// Adicionar evento para gerar o QR Code quando o botão for clicado
+document.getElementById("gerar-qr-button").addEventListener("click", gerarQRCodePIX);
