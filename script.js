@@ -90,16 +90,17 @@ document.getElementById("gerar-qr-button").addEventListener("click", function() 
 
     // Defina o valor do PIX com base no total do carrinho
     const valorPIX = total.toFixed(2); // Utiliza o valor total do carrinho
+    const valorPIXFormatado = valorPIX.replace('.', ''); // Remove o ponto decimal
 
     // Dados para o PIX (ajuste conforme sua chave e informações de pagamento)
     const pixData = {
         chave: "14958480943",  // Substitua com sua chave PIX
         nome: "Maria Isabely",
-        cidade: "Rio Braco do Ivai",
+        cidade: "Rio Branco do Ivai",
     };
 
     // Gerar a string do código PIX com o valor dinâmico
-    const pixString = `00020101021129370016BR.GOV.BCB.PIX0113${pixData.chave}520400005303986540${valorPIX.replace('.', '')}5802BR5915${pixData.nome}6009${pixData.cidade}62070503***6304`;
+    const pixString = `00020101021129370016BR.GOV.BCB.PIX0113${pixData.chave}520400005303986540${valorPIXFormatado}5802BR5915${pixData.nome}6009${pixData.cidade}62070503***6304`;
 
     // Gerar o QR Code PIX
     QRCode.toCanvas(document.getElementById("qrcode"), pixString, function (error) {
