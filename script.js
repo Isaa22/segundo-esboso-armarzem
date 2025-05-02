@@ -90,7 +90,7 @@ document.getElementById("gerar-qr-button").addEventListener("click", function() 
 
     // Defina o valor do PIX com base no total do carrinho
     const valorPIX = total.toFixed(2); // Utiliza o valor total do carrinho
-    const valorPIXFormatado = valorPIX.replace('.', ''); // Remove o ponto decimal
+    const valorPIXFormatado = valorPIX.replace('', ''); // Remove o ponto decimal
 
     // Dados para o PIX (ajuste conforme sua chave e informações de pagamento)
     const pixData = {
