@@ -1,3 +1,4 @@
+// Função para adicionar ao carrinho
 let carrinho = [];
 let total = 0;
 
@@ -80,37 +81,29 @@ function finalizarPedido() {
 
 document.getElementById("checkout-button").addEventListener("click", finalizarPedido);
 
-// Função para gerar código PIX
-function gerarCodigoPix(chave, nome, cidade, valor) {
-    const payloadFormat = "000201";
-    const merchantAccount = `0014BR.GOV.BCB.PIX01${chave.length}${chave}`;
-    const merchantInfo = `520400005303986540${valor.toFixed(2).length}${valor.toFixed(2).replace('.', '')}5802BR59${nome.length}${nome}60${cidade.length}${cidade}`;
-    const crc = "6304"; // Apenas marcador, não faz o cálculo CRC aqui
+// Função para gerar o QR Code PIX
+document.getElementById("gerar-qr-button").addEventListener("click", function() {
+    if (total === 0) {
+        alert("O carrinho está vazio. Adicione produtos antes de gerar o QR Code.");
+        return;
+    }
 
-    // Isso é um exemplo simplificado. Para produção, use uma biblioteca para montar EMV-Payload corretamente.
-    const payload = `${payloadFormat}${merchantAccount}${merchantInfo}${crc}`;
+    // Defina o valor do PIX com base no total do carrinho
+    const valorPIX = total.toFixed(2); // Utiliza o valor total do carrinho
 
-    return payload;
-}
+    // Dados para o PIX (ajuste conforme sua chave e informações de pagamento)
+    const pixData = {
+        chave: "14958480943",  // Substitua com sua chave PIX
+        nome: "Armazém da Sra. Lourdes",
+        cidade: "Cidade",
+    };
 
-// Função para gerar e exibir o QR Code do PIX
-function gerarQRCodePIX() {
-    const chave = "14958480943";  // Substitua pela sua chave Pix
-    const nome = "Armazém da Sra. Lourdes";
-    const cidade = "Rio Branco do Ivai";
+    // Gerar a string do código PIX com o valor dinâmico
+    const pixString = `00020101021129370016BR.GOV.BCB.PIX0113${pixData.chave}14958480943${valorPIX.replace('.', '')}5802BR5915${pixData.nome}6009${pixData.cidade}62070503***6304`;
 
-    // Obter o total do carrinho
-    const total = parseFloat(document.getElementById("total").innerText);
-
-    const codigoPix = gerarCodigoPix(chave, nome, cidade, total);
-
-    // Gerar o QR Code visual
-    document.getElementById("qrcode").innerHTML = "";
-    QRCode.toCanvas(document.getElementById("qrcode"), codigoPix, function (error) {
+    // Gerar o QR Code PIX
+    QRCode.toCanvas(document.getElementById("qrcode"), pixString, function (error) {
         if (error) console.error(error);
-        console.log("QR Code gerado!");
+        else console.log("QR Code gerado com sucesso!");
     });
-}
-
-// Adicionar evento para gerar o QR Code quando o botão for clicado
-document.getElementById("gerar-qr-button").addEventListener("click", gerarQRCodePIX);
+});
