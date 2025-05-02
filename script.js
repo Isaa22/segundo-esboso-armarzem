@@ -94,12 +94,12 @@ document.getElementById("gerar-qr-button").addEventListener("click", function() 
     // Dados para o PIX (ajuste conforme sua chave e informações de pagamento)
     const pixData = {
         chave: "14958480943",  // Substitua com sua chave PIX
-        nome: "Armazém da Sra. Lourdes",
-        cidade: "Cidade",
+        nome: "Maria Isabely",
+        cidade: "Rio Braco do Ivai",
     };
 
     // Gerar a string do código PIX com o valor dinâmico
-    const pixString = `00020101021129370016BR.GOV.BCB.PIX0113${pixData.chave}14958480943${valorPIX.replace('.', '')}5802BR5915${pixData.nome}6009${pixData.cidade}62070503***6304`;
+    const pixString = `00020101021129370016BR.GOV.BCB.PIX0113${pixData.chave}520400005303986540${valorPIX.replace('.', '')}5802BR5915${pixData.nome}6009${pixData.cidade}62070503***6304`;
 
     // Gerar o QR Code PIX
     QRCode.toCanvas(document.getElementById("qrcode"), pixString, function (error) {
