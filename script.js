@@ -76,7 +76,7 @@ function finalizarPedido() {
 
 document.getElementById("checkout-button").addEventListener("click", finalizarPedido);
 
-// Cálculo CRC16 para o QR Code PIX
+
 function calcularCRC16(payload) {
     let polinomio = 0x1021;
     let resultado = 0xFFFF;
@@ -91,7 +91,7 @@ function calcularCRC16(payload) {
     return resultado.toString(16).toUpperCase().padStart(4, '0');
 }
 
-// Geração do QR Code PIX
+
 document.getElementById("gerar-qr-button").addEventListener("click", function() {
     if (total === 0) {
         alert("O carrinho está vazio. Adicione produtos antes de gerar o QR Code.");
@@ -101,12 +101,12 @@ document.getElementById("gerar-qr-button").addEventListener("click", function() 
     const valorPIX = total.toFixed(2);
 
     const pixData = {
-        chave: "14958480943",         // Chave PIX
-        nome: "Maria Isabely",        // Máx. 25 caracteres
-        cidade: "Rio Branco",         // Máx. 15 caracteres, sem acento
+        chave: "14958480943",         
+        nome: "Maria",        
+        cidade: "Rio Branco",         
     };
 
-    // Construção do payload PIX (sem CRC)
+   
     let payloadSemCRC =
         "000201" +
         "010211" +
@@ -121,11 +121,11 @@ document.getElementById("gerar-qr-button").addEventListener("click", function() 
         "62070503***" +
         "6304";
 
-    // Cálculo e inclusão do CRC16 no final
+   
     const crc16 = calcularCRC16(payloadSemCRC);
     const payloadFinal = payloadSemCRC + crc16;
 
-    // Gerar QR Code no canvas
+    
     QRCode.toCanvas(document.getElementById("qrcode"), payloadFinal, function (error) {
         if (error) console.error(error);
         else console.log("QR Code gerado com sucesso!");
