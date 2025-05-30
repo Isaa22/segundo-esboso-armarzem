@@ -70,7 +70,7 @@ function finalizarPedido() {
 
     const pedido = carrinho.map(item => `${item.nome} - R$${item.preco.toFixed(2)}`).join('\n');
     const mensagem = `Olá, gostaria de fazer um pedido:\n\n${pedido}\n\nTotal: R$${total.toFixed(2)}`;
-    const whatsappUrl = `https://wa.me/5543998306254?text=${encodeURIComponent(mensagem)}`;
+    const whatsappUrl = `https://wa.me/5543996795604?text=${encodeURIComponent(mensagem)}`;
     window.open(whatsappUrl, "_blank");
 }
 
