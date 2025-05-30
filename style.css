@@ -257,5 +257,12 @@ header {
     .cart-item {
         flex-direction: column;
         align-items: flex-start;
+
+      .imagem-topo {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-bottom: 4px solid #8B4513; 
+}
     }
 }
